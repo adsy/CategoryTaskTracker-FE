@@ -1,0 +1,64 @@
+<div class="title">Task Tracker</div>
+
+<div class="catHolder">
+  <div *ngFor="let cat of categories; let i = index" style="margin-bottom: 10px; cursor:pointer;">
+    <div>
+        <div class="col">
+          <mdb-card 
+          class="card holder"
+          [routerLink]="['/',cat]"
+          >
+            <mdb-card-body class="card-body">
+              <mdb-card-title class="card-title">
+                <h4>{{cat}}</h4>
+              </mdb-card-title>
+            </mdb-card-body>
+          </mdb-card>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="">
+    <button class="bottom btn" (click)="basicModal.show()">Add Category</button>
+</div>
+
+<div class="nameBadge">Adam Brittain</div>
+
+<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+            <span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title w-100" id="myModalLabel">New Category</h4>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="addCategory()" #f="ngForm">     
+            <div class="form-group">
+              <label for="name">Category Name: </label>
+              <input 
+              id="catName"
+              name="catName"
+              type="text" 
+              class="form-control"
+              catName
+              required
+              ngModel
+              #catName="ngModel">
+            </div>
+            <div class="modal-footer">
+              <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+              <button [ngClass]="{'disabled':!f.valid}" type="button" class="btn relative waves-light" mdbWavesEffect (click)="addCategory()">Save changes</button>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  

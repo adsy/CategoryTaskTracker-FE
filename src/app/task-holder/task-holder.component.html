@@ -1,0 +1,48 @@
+<button
+class="homeButton" 
+mdbBtn 
+type="button" 
+size="sm" 
+mdbWavesEffect
+[routerLink]="['/']"
+>BACK</button>
+<div class="row">
+    <div class="col-lg-6 half">
+        <div class='title'>
+            {{selectedTask}}
+        </div>
+        <div class="lineItemHolder">
+            <div *ngFor="let item of tasks; let i = index" style="margin-bottom:10px; margin-right:20px; border: 2px solid #fc7753; border-radius:10px; ">
+                <p class="lineItem">{{item}}</p>
+                <hr>
+                <div style="
+                margin-top:-15px;
+                display: flex;
+                justify-content: center;;">
+                    <button mdbBtn type="button" size="sm" mdbWavesEffect class='btn button-success' style='margin-right:5px;' (click)="onStart(i)">Start</button>
+                    <button mdbBtn type="button" size="sm" mdbWavesEffect size="sm" class='btn button-danger'>Delete</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div *ngIf="task" class="col-lg-6 half">
+        <div class="timerHolder">
+            <hr>
+            <div class="title">Timer</div>
+            <div style="color:#fc7753; text-align: center; margin-bottom:20px">{{task}}</div>
+            <div>
+                <h2 style="color:#fc7753; text-align:center"><time>{{secondHour}}{{firstHour}}:{{secondMin}}{{firstMin}}:{{secondSec}}{{firstSec}}</time></h2>
+                <div style="display:flex; justify-content:center">
+                    <button id="start" (click)="startTimer()">START</button>
+                    <button id="stop" (click)="stopTimer()">STOP</button>
+                    <button id="clear" (click)="finishTimer()">FINISH</button>
+                </div>
+                <hr>
+            </div>
+        </div>
+        <div>
+            <div class="title">Graph</div>
+        </div>
+    </div>
+</div>

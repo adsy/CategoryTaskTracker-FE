@@ -1,0 +1,119 @@
+::-webkit-scrollbar {
+    /* -webkit-appearance: ; */
+    width: 7px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #fc7753;
+    /* box-shadow: 0 0 1px rgba(255, 255, 255, 0.5); */
+  }
+  
+
+.title{
+    padding-top:5px;
+    color:#fc7753;
+    font-size: 42px;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.half{
+    margin-top:40px;    
+    height:90vh;
+    border:10px solid #001414;
+    border-radius: 25px;
+
+}
+
+.homeButton {
+    font-size: 14px;
+    position: fixed;
+    background-color: #fc7753;
+    top: 0;
+    left: 0;
+    color: #001414;
+    margin-bottom: -20px; 
+    margin-top: 15px;
+    margin-left: 15px;
+    cursor:pointer;
+}
+
+.btn{
+    font-size:12px;
+}
+
+.button-success{
+    background-color: #00c951;
+    color:white;
+}
+
+.button-danger{
+    background-color: #ff3646;
+    color:white;
+}
+
+.lineItem{
+    color: #fc7753; 
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left:10px; 
+    margin-right:20px;
+    margin-bottom:-5px;
+}
+
+.lineItemHolder{
+    overflow: -moz-scrollbars-vertical; 
+    overflow-y: scroll;
+    height: 70vh; 
+}
+
+hr { 
+    display: block; 
+    height: 1px;
+    border: 0; 
+    border-top: 1px solid #fc7753;
+    margin: 1em 0; 
+    padding: 0; 
+}
+
+
+#start {
+    margin: 20px auto;
+    text-align: center;
+    color: white;
+    background: #00c951;
+    border:solid 2px #00c951;
+    border-radius:5px;
+    padding:4px 40px 4px;
+    letter-spacing: 2px;
+    cursor:pointer;
+  }
+  
+  #stop {
+    margin: 20px 5px auto;
+    text-align: center;
+    color: white;
+    background: #ff3646;
+    border:solid 2px #ff3646;
+    border-radius:5px;
+    padding:4px 40px 4px;
+    letter-spacing: 2px;
+    cursor:pointer;
+  }
+  
+  #clear {
+    margin: 20px auto;
+    text-align: center;
+    color: #DAD6D6;
+    background: #564E58;
+    border:solid 2px #3E383F;
+    border-radius:5px;
+    padding:4px 40px 4px;
+    letter-spacing: 2px;
+    cursor:pointer;
+  }
+
+.timerHolder {
+    border-top: px solid #fc7753;
+}
