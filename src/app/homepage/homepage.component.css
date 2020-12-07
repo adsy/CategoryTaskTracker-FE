@@ -30,31 +30,22 @@
   /* padding-top: 15px; */
   /* border: 2px solid white; */
   height: 70vh;
-  overflow: -moz-scrollbars-vertical; 
+  overflow: -moz-scrollbars-vertical;
   overflow-y: scroll;
 
   /* background-color: #fc7753; */
 }
 
-.btn {
-  background-color: #fc7753;
-  color: #001414;
-}
-
-.nameBadge {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  color: white;
-  font-size: 12px;
-}
-
 .holder {
   background-color: #001414;
-  border: .5px solid #fc7753;
+  border: 0.5px solid #fc7753;
   box-shadow: 0 0 2px rgba(0, 19, 22, 0.5);
 }
 
 .holder:active {
-  border: .5px solid #fc7753;
+  border: 0.5px solid #fc7753;
+}
+
+.btnColour {
+  background-color: #fc7753;
 }

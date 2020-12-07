@@ -9,7 +9,7 @@ interface task {
 
 export class TaskHolderService {
     
-    tasks = ['Complete next section of Javascript: The Hard Parts','2','3','1','2','3','1','2','3',]
+    tasks = ['Complete next section of Javascript: The Hard Parts']
     
     
 

@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { CategoryService } from './categoryService.service';
 import { TaskHolderComponent } from './task-holder/task-holder.component';
 import { TaskHolderService } from './taskHolderService.service';
+import { FinishedTaskService } from './finishedTasksService.service';
+import { HttpClientModule } from "@angular/common/http";
 
 
 @NgModule({
@@ -22,9 +24,10 @@ import { TaskHolderService } from './taskHolderService.service';
     AppRoutingModule,
     FormsModule,
     MDBBootstrapModule.forRoot(),
+    HttpClientModule
     
   ],
-  providers: [CategoryService,TaskHolderService],
+  providers: [CategoryService,TaskHolderService,FinishedTaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

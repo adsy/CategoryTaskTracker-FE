@@ -1,40 +1,59 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalDirective } from 'angular-bootstrap-md';
-import { CategoryService } from '../categoryService.service';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import { ModalDirective } from "angular-bootstrap-md";
+import { Subscription } from "rxjs";
+import { CategoryService } from "../categoryService.service";
 
 @Component({
-  selector: 'app-homepage',
-  templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.css']
+  selector: "app-homepage",
+  templateUrl: "./homepage.component.html",
+  styleUrls: ["./homepage.component.css"],
 })
-export class HomepageComponent implements OnInit {
-
-  constructor(private catWorker:CategoryService){
-    this.categories = catWorker.categories
-  }
-
-  @ViewChild('f',{static:false}) form;
-  @ViewChild('basicModal') modal: ModalDirective;
-  categories=[]
+export class HomepageComponent implements OnInit, OnDestroy {
+  @ViewChild("f", { static: false }) form;
+  @ViewChild("basicModal") modal: ModalDirective;
+  categories = [];
   catCount;
+  apiSubscription: Subscription;
+  addSubscription: Subscription = null;
 
+  constructor(
+    private catService: CategoryService,
+    private changeDetector: ChangeDetectorRef
+  ) {}
+
+  ngOnDestroy(): void {
+    this.apiSubscription.unsubscribe();
+    if (this.addSubscription) {
+      this.addSubscription.unsubscribe();
+    }
+  }
 
   ngOnInit(): void {
+    this.apiSubscription = this.catService.getCategories().subscribe((data) => {
+      console.log(data);
+      for (let item in data) {
+        this.categories.push({ ...data[item] });
+      }
+    });
   }
 
-  addCategory(){
+  addCategory() {
     this.modal.hide();
-
-    if (this.catWorker.categories.length % 2 === 0){
-      this.catWorker.categories.push(this.form.value.catName);
-      this.form.reset();
-      return;
-    }
-    
-    this.catWorker.categories.push(this.form.value.catName)
+    this.addSubscription = this.catService
+      .addCategories({ name: this.form.value.catName })
+      .subscribe((response) => {
+        console.log(response);
+      });
     this.form.reset();
-    
   }
 
-
+  onCategorySelect(index: number) {
+    this.catService.selectedCategory = this.categories[index];
+  }
 }

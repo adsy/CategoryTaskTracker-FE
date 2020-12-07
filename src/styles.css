@@ -23,3 +23,12 @@ body {
   color: #fc7753;
   border: 1px solid #fc7753;
 }
+
+
+.nameBadge {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  color: white;
+  font-size: 12px;
+}
