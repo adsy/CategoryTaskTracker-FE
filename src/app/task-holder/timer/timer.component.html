@@ -1,0 +1,27 @@
+<div class="timerHolder">
+  <div class="title">
+    <span class="line-text">Track your progress</span>
+  </div>
+  <div style="color: #fc7753; text-align: center; margin-bottom: 20px">
+    <span class="line-item">{{ selectedTask.description }}</span>
+  </div>
+  <div>
+    <h2 style="color: #fc7753; text-align: center">
+      <time class="line-textSmall"
+        >{{ secondHour }}{{ firstHour }}:{{ secondMin }}{{ firstMin }}:{{
+          secondSec
+        }}{{ firstSec }}</time
+      >
+    </h2>
+    <div style="display: flex; justify-content: center">
+      <button id="start" (click)="startTimer()" class="btn">START</button>
+      <button id="stop" (click)="stopTimer()" class="btn">
+        <span *ngIf="!stopped">STOP</span>
+        <span *ngIf="stopped">RESET</span>
+      </button>
+      <button id="clear" (click)="finishTimer()" class="btn">FINISH</button>
+    </div>
+  </div>
+</div>
+
+<hr />

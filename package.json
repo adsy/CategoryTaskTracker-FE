@@ -21,9 +21,11 @@
     "@angular/platform-browser-dynamic": "~10.1.4",
     "@angular/router": "~10.1.4",
     "angular-bootstrap-md": "^10.0.0",
+    "chart.js": "^2.9.4",
     "mdbootstrap": "^4.19.1",
     "numeral": "^2.0.6",
     "rxjs": "~6.6.0",
+    "sass": "^1.30.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

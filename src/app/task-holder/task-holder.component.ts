@@ -1,40 +1,39 @@
 import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { TaskHolderService } from "../taskHolderService.service";
-import { FinishedTaskService } from "../finishedTasksService.service";
+import { TaskService } from "../taskService.service";
 import { ModalDirective } from "angular-bootstrap-md";
 import { CategoryService } from "../categoryService.service";
-import { Subscription } from "rxjs";
+import { forkJoin, Observable, Subject, Subscription } from "rxjs";
+import { map, take } from "rxjs/operators";
+import { Task } from "../shared/task.interface";
+import { Category } from "../shared/category.interface";
+import { CompletedTask } from "../shared/completedTask.interface";
 
 @Component({
   selector: "app-task-holder",
   templateUrl: "./task-holder.component.html",
-  styleUrls: ["./task-holder.component.css"],
+  styleUrls: ["./task-holder.component.scss"],
 })
 export class TaskHolderComponent implements OnInit, OnDestroy {
-  categoryID;
+  @ViewChild("taskForm", { static: false }) form;
+  @ViewChild("taskModal") modal: ModalDirective;
+  categoryID: string;
   category;
-  tasks: string[] = [];
-  task: string;
+  selectedTask: Task;
   taskIndex: number;
-  count: number = 0;
-  firstSec: number = 0;
-  secondSec: number = 0;
-  firstMin: number = 0;
-  secondMin: number = 0;
-  firstHour: number = 0;
-  secondHour: number = 0;
-  timerInterval;
+
+  tasks: Task[] = [];
+
+  completedTasks: CompletedTask[] = [];
   categorySubscription: Subscription;
   deleteSubscription: Subscription = null;
+  taskSubscription: Subscription;
 
-  @ViewChild("f", { static: false }) form;
-  @ViewChild("taskModal") modal: ModalDirective;
+  loading: boolean;
 
   constructor(
-    private taskHolder: TaskHolderService,
+    private taskHolder: TaskService,
     private catService: CategoryService,
-    private finishedTasks: FinishedTaskService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
@@ -44,114 +43,75 @@ export class TaskHolderComponent implements OnInit, OnDestroy {
     if (this.deleteSubscription) {
       this.deleteSubscription.unsubscribe();
     }
-    this.task = null;
+    this.selectedTask = null;
   }
 
   ngOnInit(): void {
+    this.loading = true;
+    // Grab the category ID from the path for future use
     this.categoryID = this.activatedRoute.snapshot.params["path"];
-    this.categorySubscription = this.catService
-      .getSingleCategory(this.categoryID)
-      .subscribe((response) => {
-        this.category = response;
+    this.categorySubscription = forkJoin([
+      this.catService.getSingleCategory(this.categoryID),
+      this.taskHolder.getTasks(this.categoryID),
+    ])
+      .pipe(
+        map(([res1, res2]) => {
+          this.category = res1;
+          for (let item in res2) {
+            this.tasks.push({ ...res2[item] });
+          }
+        })
+      )
+      .subscribe(() => {
+        this.loading = false;
+        this.taskHolder.tasks = this.tasks;
+        this.taskHolder.completedTasks = this.completedTasks;
       });
-
-    this.tasks = this.taskHolder.tasks;
   }
 
-  onStart(num: number) {
-    this.task = this.tasks[num];
-    this.taskIndex = num;
-    this.resetTimer();
+  onStart(task: Task) {
+    this.selectedTask = task;
+    this.taskHolder.taskIndex = this.taskIndex;
   }
 
-  onDelete(num: number) {
-    let deletedTask = this.tasks.splice(num, 1);
-    if (this.task === deletedTask[0]) this.task = null;
-  }
-
-  startTimer() {
-    this.timerInterval = setInterval(() => {
-      ++this.count;
-
-      if (this.firstSec < 9) {
-        ++this.firstSec;
-        return;
-      }
-
-      this.firstSec = 0;
-
-      if (this.secondSec < 5) {
-        ++this.secondSec;
-        return;
-      }
-
-      this.secondSec = 0;
-
-      if (this.firstMin < 9) {
-        ++this.firstMin;
-        return;
-      }
-
-      this.firstMin = 0;
-
-      if (this.secondMin < 5) {
-        ++this.secondMin;
-        return;
-      }
-
-      this.secondMin = 0;
-
-      if (this.firstHour < 9) {
-        ++this.firstHour;
-        return;
-      }
-
-      this.firstHour = 0;
-
-      if (this.secondHour < 5) {
-        ++this.secondHour;
-        return;
-      }
-    }, 1000);
-  }
-
-  stopTimer() {
-    clearInterval(this.timerInterval);
-  }
-
-  resetTimer() {
-    clearInterval(this.timerInterval);
-    this.firstSec = 0;
-    this.secondSec = 0;
-    this.firstMin = 0;
-    this.secondMin = 0;
-    this.firstHour = 0;
-    this.secondHour = 0;
-  }
-
-  finishTimer() {
-    if (this.count > 0) {
-      this.resetTimer();
-      this.finishedTasks.finishedTasks.push(this.task);
-      this.tasks.splice(this.taskIndex, 1);
-      this.task = null;
-      return;
-    }
+  onAddTask() {
+    this.modal.show();
   }
 
   addTask() {
     this.modal.hide();
-    this.taskHolder.tasks.push(this.form.value.task);
+    this.taskHolder
+      .addTask({
+        categoryID: this.categoryID,
+        description: this.form.value.description,
+      })
+      .pipe(take(1))
+      .subscribe((data: Task) => {
+        this.tasks.push({
+          ...data,
+        });
+      });
+
+    this.form.reset();
+  }
+
+  deleteTask(i: number) {
+    const taskID = this.tasks[i]._id;
+    const deleteTaskSub = this.taskHolder.deleteTask(taskID).subscribe(() => {
+      this.tasks.splice(i, 1);
+      deleteTaskSub.unsubscribe();
+    });
   }
 
   onCatDelete() {
-    this.deleteSubscription = this.catService
-      .deleteCategory(this.categoryID)
-      .subscribe((response) => {
-        console.log("deleted");
-      });
-    setTimeout(() => {
-      this.router.navigate(["/"]);
-    }, 100);
+    this.deleteSubscription = forkJoin([
+      this.catService.deleteCategory(this.categoryID),
+      this.taskHolder.deleteTasks(this.categoryID),
+      this.taskHolder.deleteCompletedTasks(this.categoryID),
+    ]).subscribe(() => {
+      console.log("here");
+
+      this.router.navigate(["../"]);
+    });
   }
 }

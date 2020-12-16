@@ -5,14 +5,16 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
+import { Router } from "@angular/router";
 import { ModalDirective } from "angular-bootstrap-md";
 import { Subscription } from "rxjs";
+import { take } from "rxjs/operators";
 import { CategoryService } from "../categoryService.service";
 
 @Component({
   selector: "app-homepage",
   templateUrl: "./homepage.component.html",
-  styleUrls: ["./homepage.component.css"],
+  styleUrls: ["./homepage.component.scss"],
 })
 export class HomepageComponent implements OnInit, OnDestroy {
   @ViewChild("f", { static: false }) form;
@@ -22,21 +24,14 @@ export class HomepageComponent implements OnInit, OnDestroy {
   apiSubscription: Subscription;
   addSubscription: Subscription = null;
 
-  constructor(
-    private catService: CategoryService,
-    private changeDetector: ChangeDetectorRef
-  ) {}
+  constructor(private catService: CategoryService, private router: Router) {}
 
   ngOnDestroy(): void {
     this.apiSubscription.unsubscribe();
-    if (this.addSubscription) {
-      this.addSubscription.unsubscribe();
-    }
   }
 
   ngOnInit(): void {
     this.apiSubscription = this.catService.getCategories().subscribe((data) => {
-      console.log(data);
       for (let item in data) {
         this.categories.push({ ...data[item] });
       }
@@ -45,15 +40,16 @@ export class HomepageComponent implements OnInit, OnDestroy {
 
   addCategory() {
     this.modal.hide();
-    this.addSubscription = this.catService
+    this.catService
       .addCategories({ name: this.form.value.catName })
+      .pipe(take(1))
       .subscribe((response) => {
-        console.log(response);
+        this.form.reset();
+        window.location.reload();
       });
-    this.form.reset();
   }
 
-  onCategorySelect(index: number) {
-    this.catService.selectedCategory = this.categories[index];
+  unsubscribe() {
+    this.addSubscription.unsubscribe();
   }
 }

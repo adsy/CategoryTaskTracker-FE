@@ -37,15 +37,17 @@
 }
 
 .holder {
+  text-align: center;
+  height: 100px;
   background-color: #001414;
-  border: 0.5px solid #fc7753;
-  box-shadow: 0 0 2px rgba(0, 19, 22, 0.5);
-}
-
-.holder:active {
   border: 0.5px solid #fc7753;
 }
 
 .btnColour {
   background-color: #fc7753;
+}
+
+.LeftRightPadding {
+  width: 90%;
+  margin-left: 22px;
 }

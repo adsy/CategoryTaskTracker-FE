@@ -1,0 +1,216 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  font-family: "Roboto";
+  background-color: #001414;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: local("Roboto"),
+    url(./assets/fonts/RobotoCondensed-Light.ttf) format("truetype");
+}
+
+.spacing {
+  padding-bottom: 10px;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #fc7753;
+  // margin: 1em 0;
+  padding: 0;
+}
+
+.holder {
+  text-align: center;
+  height: 100px;
+  background-color: #001414;
+  border: 0.5px solid #fc7753;
+}
+
+.theme {
+  background-color: #001414;
+  border: 0.5px solid #fc7753;
+  color: #fc7753;
+}
+
+.nameBadge {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  color: white;
+  font-size: 12px;
+}
+
+.spacingAbove10px {
+  padding-top: 20px;
+}
+
+$extra-large: 110;
+$green: #fc7753;
+$black: #000000;
+$pink: #ffffff;
+
+.line-text {
+  margin-bottom: 20px;
+  margin-left: -40px;
+  $stroke-width: $extra-large * 0.05;
+  font-size: 32px;
+  position: relative;
+  display: inline-block;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke-width: $stroke-width;
+  -webkit-text-stroke-color: white;
+  $x: 12px;
+  $y: 15px;
+  $step: 1px;
+  text-shadow: $x $y $green, $x + $step $y + $step $black,
+    $x + $step * 2 $y + $step * 2 $pink;
+}
+
+.line-text-graphHeader {
+  margin-bottom: 20px;
+  $stroke-width: $extra-large * 0.05;
+  font-size: 32px;
+  position: relative;
+  display: inline-block;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke-width: $stroke-width;
+  -webkit-text-stroke-color: white;
+  $x: 12px;
+  $y: 15px;
+  $step: 1px;
+  text-shadow: $x $y $green, $x + $step $y + $step $black,
+    $x + $step * 2 $y + $step * 2 $pink;
+}
+
+.line-textSmall {
+  margin-bottom: 20px;
+  margin-left: -40px;
+  $stroke-width: $extra-large * 0.05;
+  position: relative;
+  display: inline-block;
+  font-size: $extra-large;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke-width: $stroke-width;
+  -webkit-text-stroke-color: white;
+  $x: 12px;
+  $y: 15px;
+  $step: 1px;
+  text-shadow: $x $y $green, $x + $step $y + $step $black,
+    $x + $step * 2 $y + $step * 2 $pink;
+}
+
+.line-textSmall-stats {
+  margin-bottom: 20px;
+  margin-left: 0px;
+  $stroke-width: $extra-large * 0.05;
+  position: relative;
+  display: inline-block;
+  font-size: 24px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke-width: $stroke-width;
+  -webkit-text-stroke-color: white;
+  $x: 12px;
+  $y: 15px;
+  $step: 1px;
+  text-shadow: $x $y $green, $x + $step $y + $step $pink;
+}
+
+.line-textSmall-catList {
+  padding-top: 0px;
+  margin-left: -30px;
+  $stroke-width: $extra-large * 0.05;
+  position: relative;
+  display: inline-block;
+  font-size: $extra-large;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke-width: $stroke-width;
+  -webkit-text-stroke-color: white;
+  $x: 12px;
+  $y: 15px;
+  $step: 0.5px;
+  text-shadow: $x $y $green, $x + $step $y + $step $black,
+    $x + $step * 2 $y + $step * 2 $pink;
+}
+.line-textSmall-taskList {
+  width: 95%;
+  padding-top: 0px;
+  margin-left: 0px;
+  $stroke-width: $extra-large * 0.05;
+  position: relative;
+  display: inline-block;
+  font-size: $extra-large;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke-width: $stroke-width;
+  -webkit-text-stroke-color: white;
+  $x: 12px;
+  $y: 15px;
+  $step: 0.4px;
+  text-shadow: $x $y $green, $x + $step $y + $step $green;
+}
+
+.pageTitle {
+  padding-top: 0px;
+  padding-bottom: 20px;
+  margin-left: -20px;
+  padding-right: 35px;
+  $stroke-width: $extra-large * 0.05;
+  font-size: 50px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke-width: $stroke-width;
+  -webkit-text-stroke-color: white;
+  $x: 12px;
+  $y: 15px;
+  $step: 1px;
+  display: flex;
+  justify-content: center;
+  text-shadow: $x $y $green, $x + $step $y + $step $black,
+    $x + $step * 2 $y + $step * 2 $pink;
+}
+
+.pageTitleTaskHolder {
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -20px;
+  padding-right: 35px;
+  $stroke-width: $extra-large * 0.05;
+  font-size: 42px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke-width: $stroke-width;
+  -webkit-text-stroke-color: white;
+  $x: 12px;
+  $y: 15px;
+  $step: 1px;
+  display: flex;
+  justify-content: left;
+  text-shadow: $x $y $green, $x + $step $y + $step $black,
+    $x + $step * 2 $y + $step * 2 $pink;
+}

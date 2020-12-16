@@ -5,7 +5,6 @@ import { Subscription } from "rxjs";
 @Injectable()
 export class CategoryService {
   categories = [];
-  selectedCategory;
 
   constructor(private http: HttpClient) {}
 

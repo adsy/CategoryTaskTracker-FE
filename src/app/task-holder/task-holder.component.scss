@@ -10,16 +10,20 @@
 }
 
 .title {
-  padding-top: 5px;
+  margin-top: -15px;
   color: #fc7753;
   font-size: 42px;
   text-align: center;
   text-decoration: underline;
 }
 
+.decreaseMarginBottom {
+  margin-bottom: -50px;
+}
+
 .half {
-  margin-top: 40px;
-  height: 90vh;
+  margin-top: 30px;
+  height: 75vh;
   /* border:5px solid #001414; */
   border-radius: 25px;
 }
@@ -66,55 +70,10 @@
   margin-bottom: -5px;
 }
 
-.lineItemHolder {
+.taskListHolder {
   overflow: -moz-scrollbars-vertical;
   overflow-y: scroll;
-  height: 70vh;
-}
-
-hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 1px solid #fc7753;
-  margin: 1em 0;
-  padding: 0;
-}
-
-#start {
-  margin: 20px auto;
-  text-align: center;
-  color: white;
-  background: #00c951;
-  border: solid 2px #00c951;
-  border-radius: 5px;
-  padding: 4px 40px 4px;
-  letter-spacing: 2px;
-  cursor: pointer;
-}
-
-#stop {
-  margin: 20px 5px auto;
-  text-align: center;
-  color: white;
-  background: #ff3646;
-  border: solid 2px #ff3646;
-  border-radius: 5px;
-  padding: 4px 40px 4px;
-  letter-spacing: 2px;
-  cursor: pointer;
-}
-
-#clear {
-  margin: 20px auto;
-  text-align: center;
-  color: #dad6d6;
-  background: #564e58;
-  border: solid 2px #3e383f;
-  border-radius: 5px;
-  padding: 4px 40px 4px;
-  letter-spacing: 2px;
-  cursor: pointer;
+  height: 45vh;
 }
 
 .timerHolder {
@@ -124,4 +83,31 @@ hr {
 .btnColour {
   background-color: #fc7753;
   color: #001414;
+}
+
+.taskHolderContent {
+  margin-bottom: 10px;
+  margin-right: 20px;
+  border: 2px solid #fc7753;
+  border-radius: 10px;
+}
+
+.taskButtons {
+  margin-top: -15px;
+  display: flex;
+  justify-content: center;
+}
+
+.task-page-buttonStyling {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media only screen and (max-width: 991px) {
+  .title {
+    font-size: 32px;
+  }
+  .extraTopPadding {
+    padding-top: 70px;
+  }
 }

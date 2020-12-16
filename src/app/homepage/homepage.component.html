@@ -1,4 +1,4 @@
-<div class="title">Task Tracker</div>
+<div class="row pageTitle">Task Tracker</div>
 
 <div class="catHolder">
   <div
@@ -7,14 +7,10 @@
   >
     <div>
       <div class="col">
-        <mdb-card
-          class="card holder"
-          [routerLink]="['/', cat._id]"
-          (click)="onCategorySelect(i)"
-        >
+        <mdb-card class="card holder" [routerLink]="['/', cat._id]">
           <mdb-card-body class="card-body">
             <mdb-card-title class="card-title">
-              <h4>{{ cat.name }}</h4>
+              <h4 class="line-textSmall-catList">{{ cat.name }}</h4>
             </mdb-card-title>
           </mdb-card-body>
         </mdb-card>
@@ -42,33 +38,35 @@
 >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header holder">
         <button
           type="button"
           class="close pull-right"
           aria-label="Close"
           (click)="basicModal.hide()"
         >
-          <span aria-hidden="true">×</span>
+          <span aria-hidden="true" class="white-text">×</span>
         </button>
-        <h4 class="modal-title w-100" id="myModalLabel">New Category</h4>
+        <h4 class="modal-title w-100 orange-text" id="myModalLabel">
+          New Category
+        </h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body theme">
         <form (ngSubmit)="addCategory()" #f="ngForm">
-          <div class="form-group">
-            <label for="name">Category Name: </label>
+          <div class="form-group holder">
+            <label for="name " class="orange-text">Category Name: </label>
             <input
               id="catName"
               name="catName"
               type="text"
-              class="form-control"
+              class="form-control LeftRightPadding"
               catName
               required
               ngModel
               #catName="ngModel"
             />
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer holder">
             <button
               type="button"
               mdbBtn
@@ -83,7 +81,7 @@
             <button
               [ngClass]="{ disabled: !f.valid }"
               type="button"
-              class="btn btnColour relative waves-light"
+              class="btn btnColour black-text relative waves-light"
               mdbWavesEffect
               (click)="addCategory()"
             >

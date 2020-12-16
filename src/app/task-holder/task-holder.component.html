@@ -1,41 +1,42 @@
-<button
-  class="homeButton"
-  mdbBtn
-  type="button"
-  size="sm"
-  mdbWavesEffect
-  [routerLink]="['/']"
->
-  BACK
-</button>
-<button
-  class="homeButton"
-  mdbBtn
-  type="button"
-  size="sm"
-  mdbWavesEffect
-  (click)="onCatDelete()"
->
-  DELETE CATEGORY
-</button>
-<div class="row">
-  <div class="col-lg-6 half">
-    <div class="title">
-      {{ category.name }}
+<div style="margin-bottom: -15px">
+  <span class="col-xs-8 pageTitleTaskHolder">Task Tracker</span>
+  <div class="col-xs-4 task-page-buttonStyling">
+    <button
+      class="homeButton"
+      mdbBtn
+      type="button"
+      size="sm"
+      mdbWavesEffect
+      [routerLink]="['/']"
+    >
+      BACK
+    </button>
+    <button
+      class="homeButton"
+      mdbBtn
+      type="button"
+      size="sm"
+      mdbWavesEffect
+      (click)="onCatDelete()"
+    >
+      DELETE CATEGORY
+    </button>
+  </div>
+</div>
+
+<div class="row spacingAbove10px">
+  <div *ngIf="!loading" class="col-lg-6 half">
+    <hr />
+    <div>
+      <h3 class="title">
+        <span class="line-text">{{ category.name }}</span>
+      </h3>
     </div>
-    <div class="lineItemHolder">
-      <div
-        *ngFor="let item of tasks; let i = index"
-        style="
-          margin-bottom: 10px;
-          margin-right: 20px;
-          border: 2px solid #fc7753;
-          border-radius: 10px;
-        "
-      >
-        <p class="lineItem">{{ item }}</p>
+    <div class="taskListHolder">
+      <div *ngFor="let item of tasks; let i = index" class="taskHolderContent">
+        <p class="line-textSmall-taskList">{{ item.description }}</p>
         <hr />
-        <div style="margin-top: -15px; display: flex; justify-content: center">
+        <div class="taskButtons">
           <button
             mdbBtn
             type="button"
@@ -43,7 +44,7 @@
             mdbWavesEffect
             class="btn button-success"
             style="margin-right: 5px"
-            (click)="onStart(i)"
+            (click)="onStart(item)"
           >
             Start
           </button>
@@ -54,79 +55,102 @@
             mdbWavesEffect
             size="sm"
             class="btn button-danger"
-            (click)="onDelete(i)"
+            (click)="deleteTask(i)"
           >
             Delete
           </button>
         </div>
       </div>
     </div>
-    <button class="addButton" type="button" size="sm" mdbWavesEffect mdbBtn>
+    <button
+      class="addButton"
+      type="button"
+      size="sm"
+      mdbWavesEffect
+      mdbBtn
+      (click)="onAddTask()"
+    >
       Add Task
     </button>
+    <hr />
+    <app-stats></app-stats>
   </div>
-
-  <div *ngIf="task" class="col-lg-6 half">
-    <div class="timerHolder">
-      <hr />
-      <div class="title">Timer</div>
-      <div style="color: #fc7753; text-align: center; margin-bottom: 20px">
-        {{ task }}
-      </div>
-      <div>
-        <h2 style="color: #fc7753; text-align: center">
-          <time
-            >{{ secondHour }}{{ firstHour }}:{{ secondMin }}{{ firstMin }}:{{
-              secondSec
-            }}{{ firstSec }}</time
-          >
-        </h2>
-        <div style="display: flex; justify-content: center">
-          <button id="start" (click)="startTimer()">START</button>
-          <button id="stop" (click)="stopTimer()">STOP</button>
-          <button id="clear" (click)="finishTimer()">FINISH</button>
-        </div>
-        <hr />
-      </div>
+  <hr />
+  <div class="col-lg-6 half extraTopPadding">
+    <div *ngIf="completedTasks.length > 0">
+      <app-graph [completedTasks]=""></app-graph>
     </div>
     <div>
-      <div class="title">Graph</div>
+      <div *ngIf="selectedTask">
+        <hr />
+        <app-timer [task]="selectedTask"></app-timer>
+      </div>
+    </div>
+    <div class="nameBadge">Adam Brittain</div>
+  </div>
+</div>
+<div
+  mdbModal
+  #taskModal="mdbModal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myBasicModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header holder">
+        <button
+          type="button"
+          class="close pull-right"
+          aria-label="Close"
+          (click)="taskModal.hide()"
+        >
+          <span aria-hidden="true" class="white-text">×</span>
+        </button>
+        <h4 class="modal-title w-100 orange-text" id="myModalLabel">
+          New Category
+        </h4>
+      </div>
+      <div class="modal-body theme">
+        <form (ngSubmit)="addTask()" #taskForm="ngForm">
+          <div class="form-group holder">
+            <label for="name " class="orange-text">Task Description: </label>
+            <input
+              id="description"
+              name="description"
+              type="text"
+              class="form-control LeftRightPadding"
+              description
+              required
+              ngModel
+              #description="ngModel"
+            />
+          </div>
+          <div class="modal-footer holder">
+            <button
+              type="button"
+              mdbBtn
+              color="secondary"
+              class="waves-light"
+              aria-label="Close"
+              (click)="taskModal.hide()"
+              mdbWavesEffect
+            >
+              Close
+            </button>
+            <button
+              [ngClass]="{ disabled: !taskForm.valid }"
+              type="submit"
+              class="btn btnColour black-text relative waves-light"
+              mdbWavesEffect
+            >
+              Save changes
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-
-  <div class="nameBadge">Adam Brittain</div>
-
-  <!-- <div mdbModal #taskModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="taskModal.hide()">
-                <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel">New Task</h4>
-            </div>
-            <div class="modal-body">
-            <form (ngSubmit)="addTask()" #f="ngForm">     
-                <div class="form-group">
-                <label for="name">Task: </label>
-                <input 
-                id="task"
-                name="task"
-                type="text" 
-                class="form-control"
-                task
-                required
-                ngModel
-                #task="ngModel">
-                </div>
-                <div class="modal-footer">
-                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="taskModal.hide()" mdbWavesEffect>Close</button>
-                <button [ngClass]="{'disabled':!f.valid}" type="button" class="btn btnColour relative waves-light" mdbWavesEffect (click)="addTask()" >Save changes</button>
-                </div>
-            </form>
-            </div>
-            
-        </div>
-        </div>
-    </div> -->
 </div>

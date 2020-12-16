@@ -1,0 +1,12 @@
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  margin-top: -15px;
+  color: #fc7753;
+  font-size: 42px;
+  text-align: center;
+  text-decoration: underline;
+}
